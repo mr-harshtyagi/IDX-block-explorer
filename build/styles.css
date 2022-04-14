@@ -1,9 +1,13 @@
-
+body{
+    background-color:azure;
+}
 .margin{
     display: block;
     margin: 5% auto; 
     text-align: center;
     color: white;
+   
+   
 }
 
 .main{

@@ -1,15 +1,15 @@
-import React from 'react';
-const pi=3.14
+import React,{useState} from 'react';
+import { Button } from 'react-bootstrap';
+import Popup from "./Popup"
 
-function App(){
-    return(
-     <div className='main'> 
-         <h1 className='margin'>Hello PI {pi} 
-         <button type="button" className="btn btn-lg btn-primary margin"><strong>Primary</strong></button>
-         </h1>
-         
-     </div>
+export default function App(){
+ const [show,setShow] =useState(false);
+    return (
+      <div className='text-center'>
+        <h1>Click on link below to show Popup</h1>
+        <Button onClick={()=> setShow(true)} variant='primary'>Show Popup</Button>
+       {show && <Popup/>}
+          </div>
     );
 }
 
-export default App;
