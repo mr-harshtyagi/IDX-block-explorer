@@ -1,2 +1,2 @@
 # react-app
-Sample React App for testing new libarries and features
+Sample React App for testing new libraries and features
