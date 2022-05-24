@@ -1,20 +1,25 @@
-import React,{useState} from 'react';
-import { Button} from 'react-bootstrap';
-import Popup from "./Popup"
-import Nav from './Navbar';
-
+import SearchBar from './SearchBar';
+import { Container,Row, Col } from 'react-bootstrap';
+import IdxCard from './idxCard'
+import Card1 from  "./Card1"
+import Card2 from "./Card2"
 
 export default function App(){
- const [show,setShow] =useState(false);
     return (
       <>
-      <Nav/>
+      <SearchBar/>
+      <IdxCard/>
+      <Container style={{marginTop:"40px",marginLeft:"10px"}}>
+        <Row>
+          <Col> 
+          <Card1/>
+          </Col>
+          <Col>
+          <Card2 />
+          </Col>
+        </Row>
+      </Container> 
       </>
-      // <div className='text-center'>
-      //   <h1>Click on link below to show Popup</h1>
-      //   <Button onClick={()=> setShow(true)} variant='primary'>Show Popup</Button>
-      //  {show && <Popup/>}
-      //     </div>
     );
 }
 
