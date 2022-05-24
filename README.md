@@ -1,2 +1,2 @@
-# react-app
-Sample React App for testing new libraries and features
+# IDX Block Explorer
+This is blockchain explorer for Identrix protocol network.
