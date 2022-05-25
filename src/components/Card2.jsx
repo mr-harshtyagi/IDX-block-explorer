@@ -12,8 +12,7 @@ export default function Card2(){
           backgroundColor: "white",
           borderRadius: "20px",
           boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px",
-        }}
-      >
+        }}>
         <h4 style={{ marginBottom: "20px" }}>Latest Transactions</h4>
         <Transaction
           key={1}

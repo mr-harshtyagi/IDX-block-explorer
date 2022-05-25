@@ -56,9 +56,7 @@ export default function Transaction(props){
           <hr style={{width:"90%",marginLeft:"40px"}}/>
         </Row>
       </Container> 
-
-      )}
-        
+      )}   
     </>
     );
 }

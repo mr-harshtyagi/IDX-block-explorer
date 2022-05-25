@@ -9,7 +9,7 @@ export default function App(){
       <>
       <SearchBar/>
       <IdxCard/>
-      <Container style={{marginTop:"40px",marginLeft:"10px"}}>
+      <Container style={{marginTop:"40px",marginLeft:"70px",padding:"0"}}>
         <Row>
           <Col> 
           <Card1/>

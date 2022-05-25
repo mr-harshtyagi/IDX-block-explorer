@@ -4,8 +4,8 @@ import Block from "./Block"
 
 export default function Card1(){
     return(
-     <div style={
-        {
+     <div 
+        style={{
          height:"450px",
          padding:"10px",
          marginTop:"-20px",
@@ -24,7 +24,6 @@ export default function Card1(){
                View More
         </Button>
         </div>
-          
      </div>
     );
 }

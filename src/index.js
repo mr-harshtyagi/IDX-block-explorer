@@ -11,7 +11,6 @@ ReactDOM.render(
     <Routes>
       <Route path="/" element={<App />} />
       <Route path="/transaction/:hash" element={<TransactionData />} />
-
     </Routes>
   </BrowserRouter>,
   document.getElementById("root")
