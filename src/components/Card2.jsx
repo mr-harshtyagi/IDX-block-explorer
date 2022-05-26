@@ -12,23 +12,24 @@ export default function Card2(){
           backgroundColor: "white",
           borderRadius: "20px",
           boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px",
-        }}>
+        }}
+      >
         <h4 style={{ marginBottom: "20px" }}>Latest Transactions</h4>
         <Transaction
           key={1}
-          hash="2dce3a5f12748b10c42ffd49496264a047b78db4dcaf776530fcf55aa63e44b1"
+          hash="385ba062306bd209f4673a17e8e3fd0a5faee131b11b0ae19aa13aea249aa82d"
         />
         <Transaction
           key={2}
-          hash="a9d14d10416fadb3123528fc1810d5da244de3da08d53deb6db4dd52cb119a96"
+          hash="385ba062306bd209f4673a17e8e3fd0a5faee131b11b0ae19aa13aea249aa82d"
         />
         <Transaction
           key={3}
-          hash="d12fad37411110a68141216ae614a6a3d168e51ac16fd37bb61577c129e84cc6"
+          hash="385ba062306bd209f4673a17e8e3fd0a5faee131b11b0ae19aa13aea249aa82d"
         />
         <Transaction
           key={4}
-          hash="b1762321337b007bd922bcdcced0550479236f1ed0fcaa5d5a6d05f4e838521b"
+          hash="385ba062306bd209f4673a17e8e3fd0a5faee131b11b0ae19aa13aea249aa82d"
         />
         <div className="d-grid">
           <Button variant="primary">View More</Button>
