@@ -16,20 +16,28 @@ export default function Card2(){
       >
         <h4 style={{ marginBottom: "20px" }}>Latest Transactions</h4>
         <Transaction
-          key={1}
-          hash="385ba062306bd209f4673a17e8e3fd0a5faee131b11b0ae19aa13aea249aa82d"
+          block_number="3287473"
+          issuer="0x4677byrihgyttt44"
+          holder="0x738498bejieu4893"
+          gas_fee="12"
         />
         <Transaction
-          key={2}
-          hash="385ba062306bd209f4673a17e8e3fd0a5faee131b11b0ae19aa13aea249aa82d"
+          block_number="3287473"
+          issuer="0x4677byrihgyttt44"
+          holder="0x738498bejieu4893"
+          gas_fee="12"
         />
         <Transaction
-          key={3}
-          hash="385ba062306bd209f4673a17e8e3fd0a5faee131b11b0ae19aa13aea249aa82d"
+          block_number="3287473"
+          issuer="0x4677byrihgyttt44"
+          holder="0x738498bejieu4893"
+          gas_fee="12"
         />
         <Transaction
-          key={4}
-          hash="385ba062306bd209f4673a17e8e3fd0a5faee131b11b0ae19aa13aea249aa82d"
+          block_number="3287473"
+          issuer="0x4677byrihgyttt44"
+          holder="0x738498bejieu4893"
+          gas_fee="12"
         />
         <div className="d-grid">
           <Button variant="primary">View More</Button>

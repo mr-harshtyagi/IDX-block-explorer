@@ -1,5 +1,6 @@
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { FcLink } from "react-icons/fc";
 import SearchBar from '../components/SearchBar';
 import { Container,Row, Col, Table,Button } from 'react-bootstrap';
 import Form from "react-bootstrap/Form";
@@ -17,34 +18,60 @@ export default function TransactionData(){
     let params =useParams();
     const [value, setValue] = useState("");
     const [loading,setLoading] = useState(true);
-    const [data,setData] = useState({});
+    const [data,setData] = useState();
+    const [decryptedDataArray, setDecryptedDataArray] =useState([])
     const [verified,setVerified] =useState(false)
     const [enterKeyComponent, setEnterKeyComponent] = useState(true);
 
     function handleClick(){
-        var bytes = CryptoJS.AES.decrypt(data.transaction_data,value);
+      decryptTransaction(data);
+       }
+
+    function decryptTransaction(encryptedData){
+        var bytes = CryptoJS.AES.decrypt(encryptedData.transaction_data, value);
         try {
           var decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
-          setData(decryptedData)
-          setVerified(true)
+
+          setDecryptedDataArray((prevData) => {
+            return [...prevData, decryptedData]
+          })
+          if(decryptedData.prev_hash == "null"){
+            setVerified(true)
+          }
+          else{
+           loadTransaction(decryptedData.prev_hash)
+           console.log(decryptedData.prev_hash);
+          }
         } catch (error) {
-          setEnterKeyComponent(false)
-        } }
+          setEnterKeyComponent(false);  // unauthorised show
+        }}   
+
+    function loadTransaction(hash){
+         axios
+           .get(`https://test.ipdb.io/api/v1/transactions/${hash}`)
+           .then(function (response) {
+             if (response.data) {
+               decryptTransaction(response.data.asset.data);
+             } 
+           })
+           .catch(function (error) {
+             console.log(error);
+           });
+      }  
 
  useEffect(()=>{
-            axios.get(`https://test.ipdb.io/api/v1/transactions/${params.hash}`)
+  axios.get(`https://test.ipdb.io/api/v1/transactions/${params.hash}`)
   .then(function (response) {
       if(response.data){
           setData(response.data.asset.data);
-          setLoading(false);}
-          else{
-              setLoading(true);
-          }
-     })
+          setLoading(false);
+}})
   .catch(function (error) {
     console.log(error);
      })
-    },[params])
+    },[])
+
+
     return (
       <>
         <SearchBar />
@@ -67,96 +94,130 @@ export default function TransactionData(){
                   boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px",
                 }}
               >
-                <Table>
-                  <tbody>
-                    <tr style={{ borderColor: "white" }}>
-                      <td>
-                        <BsInfoCircle
-                          style={{ fontSize: "0.8rem", color: "grey" }}
-                        />{" "}
-                        Transaction Hash
-                      </td>
-                      <td>
-                        {data.transaction_hash}
-                        <BiCopy
+                {decryptedDataArray.map((data, index) => {
+                  return (
+                    <>
+                      <Table>
+                        <tbody>
+                          <tr style={{ borderColor: "white" }}>
+                            <td>
+                              <BsInfoCircle
+                                style={{ fontSize: "0.8rem", color: "grey" }}
+                              />{" "}
+                              Transaction Hash
+                            </td>
+                            <td>
+                              {data.transaction_hash}
+                              <BiCopy
+                                style={{
+                                  fontSize: "1rem",
+                                  color: "grey",
+                                  marginLeft: "5px",
+                                }}
+                              />
+                            </td>
+                          </tr>
+                          <tr style={{ borderColor: "white" }}>
+                            <td>Status</td>
+                            <td style={{ color: "green" }}>
+                              <BsFillCheckCircleFill />
+                              {" " + data.status}
+                            </td>
+                          </tr>
+                          <tr style={{ borderColor: "white" }}>
+                            <td>Block No.</td>
+                            <td style={{ color: "#5463FF" }}>
+                              {data.block_number}
+                              <span
+                                style={{
+                                  padding: "5px",
+                                  fontSize: "0.7rem",
+                                  borderRadius: "10px",
+                                  marginLeft: "10px",
+                                  color: "white",
+                                  backgroundColor: "#398AB9",
+                                }}
+                              >
+                                10 Block confirmations
+                              </span>
+                            </td>
+                          </tr>
+                          <tr style={{ borderColor: "white" }}>
+                            <td>Document Identifier</td>
+                            <td>{data.doc_uid}</td>
+                          </tr>
+                          <tr style={{ borderColor: "white" }}>
+                            <td>Document Version</td>
+                            <td>
+                              <strong>{data.doc_version}</strong>
+                            </td>
+                          </tr>
+                          <tr style={{ borderColor: "white" }}>
+                            <td>Issuer</td>
+                            <td>{data.issuer}</td>
+                          </tr>
+                          <tr style={{ borderColor: "white" }}>
+                            <td>Holder</td>
+                            <td>{data.holder}</td>
+                          </tr>
+                          <tr style={{ borderColor: "white" }}>
+                            <td>Doc Signature</td>
+                            <td>
+                              {data.doc_signature.slice(0, 70) + "...."}
+                              <BiCopy
+                                style={{
+                                  fontSize: "1rem",
+                                  color: "grey",
+                                  marginLeft: "5px",
+                                }}
+                              />
+                            </td>
+                          </tr>
+                          <tr style={{ borderColor: "white" }}>
+                            <td>Time Stamp</td>
+                            <td>{data.datetime}</td>
+                          </tr>
+                          <tr style={{ borderColor: "white" }}>
+                            <td>Revocation Status</td>
+                            <td>{data.revocation_status.toString()}</td>
+                          </tr>
+                          <tr style={{ borderColor: "white" }}>
+                            <td>Gas Fee</td>
+                            <td style={{ color: "blue" }}>{data.gas_fee}</td>
+                          </tr>
+                          <tr style={{ borderColor: "white" }}>
+                            <td>Previous Hash</td>
+                            <td style={{ color: "blue" }}>{data.prev_hash}</td>
+                          </tr>
+                        </tbody>
+                      </Table>
+                      {!(decryptedDataArray.length - 1 === index) &&
+                      <div
+                        style={{
+                          backgroundColor: "white",
+                          marginLeft:"-10px",
+                          width: "110%",
+                          textAlign: "center",
+                          padding:"10px"
+                        }}
+                      >
+                        <FcLink
                           style={{
-                            fontSize: "1rem",
-                            color: "grey",
-                            marginLeft: "5px",
+                            marginRight:"100px",
+                            fontSize: "3rem",
+                            transform: "rotateZ(90deg)",
                           }}
                         />
-                      </td>
-                    </tr>
-                    <tr style={{ borderColor: "white" }}>
-                      <td>Status</td>
-                      <td style={{ color: "green" }}>
-                        <BsFillCheckCircleFill />
-                        {" " + data.status}
-                      </td>
-                    </tr>
-                    <tr style={{ borderColor: "white" }}>
-                      <td>Block No.</td>
-                      <td style={{ color: "#5463FF" }}>
-                        {data.block_number}
-                        <span
-                          style={{
-                            padding: "5px",
-                            fontSize: "0.7rem",
-                            borderRadius: "10px",
-                            marginLeft: "10px",
-                            color: "white",
-                            backgroundColor: "#398AB9",
-                          }}
-                        >
-                          10 Block confirmations
-                        </span>
-                      </td>
-                    </tr>
-                    <tr style={{ borderColor: "white" }}>
-                      <td>Document Identifier</td>
-                      <td>{data.doc_uid}</td>
-                    </tr>
-                    <tr style={{ borderColor: "white" }}>
-                      <td>Document Version</td>
-                      <td>
-                        <strong>{data.doc_version}</strong>
-                      </td>
-                    </tr>
-                    <tr style={{ borderColor: "white" }}>
-                      <td>Issuer</td>
-                      <td>{data.issuer}</td>
-                    </tr>
-                    <tr style={{ borderColor: "white" }}>
-                      <td>Holder</td>
-                      <td>{data.holder}</td>
-                    </tr>
-                    <tr style={{ borderColor: "white" }}>
-                      <td>Doc Signature</td>
-                      <td>
-                        {data.doc_signature.slice(0, 70) + "...."}
-                        <BiCopy
-                          style={{
-                            fontSize: "1rem",
-                            color: "grey",
-                            marginLeft: "5px",
-                          }}
-                        />
-                      </td>
-                    </tr>
-                    <tr style={{ borderColor: "white" }}>
-                      <td>Time Stamp</td>
-                      <td>{data.datetime}</td>
-                    </tr>
-                    <tr style={{ borderColor: "white" }}>
-                      <td>Revocation Status</td>
-                      <td>{data.revocation_status.toString()}</td>
-                    </tr>
-                    <tr style={{ borderColor: "white" }}>
-                      <td>Gas Fee</td>
-                      <td style={{ color: "blue" }}>{data.gas_fee}</td>
-                    </tr>
-                  </tbody>
-                </Table>
+                      </div>
+                      }
+                    </>
+                  );
+
+
+
+                })}
+                
+
               </div>
             </div>
           </>
@@ -168,14 +229,19 @@ export default function TransactionData(){
                   marginTop: "-50px",
                   backgroundColor: "white",
                   height: "100px",
-                }}>
-                <Container style={{ paddingTop: "60px", textAlign:"center" }}>
+                }}
+              >
+                <Container style={{ paddingTop: "60px", textAlign: "center" }}>
                   <Row>
                     <Col lg="2"></Col>
                     <Col lg="8">
                       <h2>Enter your Secret Key to view this Transaction</h2>
                       <Form.Control
-                        style={{ width: "90%", marginTop: "20px", marginLeft:"40px" }}
+                        style={{
+                          width: "90%",
+                          marginTop: "20px",
+                          marginLeft: "40px",
+                        }}
                         onChange={(e) => {
                           setValue(e.target.value);
                         }}
@@ -185,7 +251,11 @@ export default function TransactionData(){
                         value={value}
                         aria-describedby="transaction-hash"
                       ></Form.Control>
-                      <Button className='mt-3'  onClick={handleClick} variant="primary">
+                      <Button
+                        className="mt-3"
+                        onClick={handleClick}
+                        variant="primary"
+                      >
                         <strong> Verify</strong>
                       </Button>
                     </Col>

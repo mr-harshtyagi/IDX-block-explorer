@@ -6,17 +6,17 @@ import { PulseLoader } from 'react-spinners';
 
 export default function Transaction(props){
   const [data,setData] = useState({});
-  const [loading,setLoading] = useState(true);
-  useEffect(()=>{
-            axios.get(`https://test.ipdb.io/api/v1/transactions/${props.hash}`)
-  .then(function (response) {
-    setData(response.data.asset.data);
-    setLoading(false)
-     })
-  .catch(function (error) {
-    console.log(error);
-     })
-    },[])
+  const [loading,setLoading] = useState(false);
+  // useEffect(()=>{
+  //           axios.get(`https://test.ipdb.io/api/v1/transactions/${props.hash}`)
+  // .then(function (response) {
+  //   setData(response.data.asset.data);
+  //   setLoading(false)
+  //    })
+  // .catch(function (error) {
+  //   console.log(error);
+  //    })
+  //   },[])
 
     return(<>
       {loading ? (
@@ -33,23 +33,23 @@ export default function Transaction(props){
           </Col>
           <Col lg="3">
           <div>
-            <h5 style={{fontSize:"1rem"}}><strong>{data.block_number}</strong> </h5>
+            <h5 style={{fontSize:"1rem"}}><strong>{props.block_number}</strong> </h5>
             <h5 style={{fontSize:"0.8rem",color:"grey"}}>18 sec ago</h5>
             </div>
           </Col>
           <Col lg="6">
           <div style={{display:"inline-block"}}>
                <h5 style={{fontSize:"1rem"}}>From 
-                <span style={{color:"blue", fontSize:"0.9rem"}}> {data.issuer.slice(0,15)+ "..."}</span> </h5>
+                <span style={{color:"blue", fontSize:"0.9rem"}}> {props.issuer.slice(0,15)+ "..."}</span> </h5>
                 <h5 style={{fontSize:"1rem"}}>To 
-                <span style={{color:"blue", fontSize:"0.9rem"}}> {data.holder.slice(0,15)+ "..."}</span> </h5> 
+                <span style={{color:"blue", fontSize:"0.9rem"}}> {props.holder.slice(0,15)+ "..."}</span> </h5> 
             
             </div>
          
           </Col>
            <Col lg="2">
           <div style={{display:"inline-block"}}>
-               <h5 style={{fontSize:"1rem"}}>{data.gas_fee} IDX </h5> 
+               <h5 style={{fontSize:"1rem"}}>{props.gas_fee} IDX </h5> 
             </div>
          
           </Col>
