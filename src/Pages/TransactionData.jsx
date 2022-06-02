@@ -9,6 +9,7 @@ import {
   BsFillCheckCircleFill,
   BsFillXCircleFill,
 } from "react-icons/bs";
+import { GoVerified } from "react-icons/go";
 import { BiCopy, } from "react-icons/bi";
 import { useEffect, useState } from 'react';
 import { PulseLoader } from 'react-spinners';
@@ -174,6 +175,13 @@ export default function TransactionData(){
                             </td>
                           </tr>
                           <tr style={{ borderColor: "white" }}>
+                            <td>Signature status</td>
+                            <td style={{ color: "green" }}>
+                              <GoVerified />
+                              {" " + data.signature_status}
+                            </td>
+                          </tr>
+                          <tr style={{ borderColor: "white" }}>
                             <td>Time Stamp</td>
                             <td>{data.datetime}</td>
                           </tr>
@@ -191,25 +199,25 @@ export default function TransactionData(){
                           </tr>
                         </tbody>
                       </Table>
-                      {!(decryptedDataArray.length - 1 === index) &&
-                      <div
-                        style={{
-                          backgroundColor: "white",
-                          marginLeft:"-10px",
-                          width: "110%",
-                          textAlign: "center",
-                          padding:"10px"
-                        }}
-                      >
-                        <FcLink
+                      {!(decryptedDataArray.length - 1 === index) && (
+                        <div
                           style={{
-                            marginRight:"100px",
-                            fontSize: "3rem",
-                            transform: "rotateZ(90deg)",
+                            backgroundColor: "white",
+                            marginLeft: "-10px",
+                            width: "110%",
+                            textAlign: "center",
+                            padding: "10px",
                           }}
-                        />
-                      </div>
-                      }
+                        >
+                          <FcLink
+                            style={{
+                              marginRight: "100px",
+                              fontSize: "3rem",
+                              transform: "rotateZ(90deg)",
+                            }}
+                          />
+                        </div>
+                      )}
                     </>
                   );
 
