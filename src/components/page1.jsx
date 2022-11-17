@@ -1,19 +1,13 @@
 import React from 'react';
-import { Link } from "react-router-dom";
-const pi=3.14
-
+import SimpleBottomNavigation from './BottomNavigation';
+import Nav from './Navbar';
 function page1(){
     return (
-      <div className="main">
-        <h1 className="margin">
-          Hello PI {pi}
-          <Link to="/page2">
-            <button type="button" className="btn btn-lg btn-primary margin">
-              <strong>Go to Second Page</strong>
-            </button>
-          </Link>
-        </h1>
-      </div>
+      <>
+      <Nav/>
+        <h1 className="margin">This is page 1</h1>
+        <SimpleBottomNavigation/>
+      </>
     );
 }
 
