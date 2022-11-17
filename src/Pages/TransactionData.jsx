@@ -177,17 +177,8 @@ export default function TransactionData(){
                           <tr style={{ borderColor: "white" }}>
                             <td>Signature status</td>
                             <td style={{ color: "green" }}>
-                              {data.signature_status ? (
-                                <>
-                                  <GoVerified />
-                                  {" Verified"}
-                                </>
-                              ) : (
-                                <div style={{color:"red"}}>
-                                  <BsFillXCircleFill />
-                                  {"Not Verified"}
-                                </div>
-                              )}
+                              <GoVerified />
+                              {" " + data.signature_status}
                             </td>
                           </tr>
                           <tr style={{ borderColor: "white" }}>
