@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+<<<<<<< HEAD
 import App from "./components/App";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Page1 from "./components/page1";
@@ -20,5 +21,19 @@ ReactDOM.render(
     </BrowserRouter>
   </AppbarProvider>,
 
+=======
+import App from './components/App';
+import TransactionData from './Pages/TransactionData';
+import {BrowserRouter,Routes,Route} from "react-router-dom"
+
+ReactDOM.render(
+  // defining routes inside browser router
+  <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<App />} />
+      <Route path="/transaction/:hash" element={<TransactionData />} />
+    </Routes>
+  </BrowserRouter>,
+>>>>>>> 9bc9f84eba8bd209261430609a9eecf2b6fcd07a
   document.getElementById("root")
 );
